@@ -20,7 +20,10 @@ def clean_html(raw_html: str) -> str:
 def fetch():
     try:
         url = request.json.get("url")
-        resp = requests.get(url, timeout=10)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+        }
+        resp = requests.get(url, headers=headers, timeout=10)
         resp.raise_for_status()
         clean = clean_html(resp.text)
         checksum = hashlib.sha256(clean.encode()).hexdigest()
